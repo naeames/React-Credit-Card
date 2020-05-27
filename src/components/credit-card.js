@@ -14,7 +14,13 @@ class Card extends Component {
 
             cardname:'THIS IS MY NAME',
 
-            msg:''
+            msg:'',
+            expireDate:{
+              statusDate: true,
+              displayMessageDate:"MM/YY",
+              date:"",
+              dateMessage:""
+            }
           }
 
           this.CardNumber=this.CardNumber.bind(this);
@@ -38,7 +44,6 @@ class Card extends Component {
   }
 
 
-
     CardNumber(event) {
         event.target.value = event.target.value.replace(/[^\dA-Z]/g, '').replace(/(.{4})/g, '$1 ').trim();
         if (event.target.value.length<20)
@@ -56,9 +61,11 @@ class Card extends Component {
     
        this.setState({
     
-          validThru: (event.target.value).split("").slice(0,2).join("")+"/"+(event.target.value).split("").slice(2,4).join(""),
+          validThru: (event.target.value).replace(
+            /^([0-1])([3-9])$/g, '0$1/$2').split("").slice(0,2).join("")+"/"+(event.target.value).split("").slice(2,4).join(""),
         })
          }
+         
 
     render() { 
         return ( 
@@ -83,6 +90,7 @@ class Card extends Component {
             <input type="text" maxLength="19"  placeholder="Card number" onChange= {this.CardNumber}/>
             <input type="text" maxLength="20"  placeholder="User name" onChange={this.CardName}/>
             <input type="text" maxLength="4"  placeholder="MM / YY"    onChange={this.ValidThru}/>
+            
          </div>
 
    </div>
